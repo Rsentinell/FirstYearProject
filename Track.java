@@ -27,13 +27,14 @@ public class Track{
     //We initialised these strings as "<Empty>" and Unknown, 
     //because we want a title name that is unlikely to be selected when we represent an empty track space on the playlist
     //The Unknown just means we haven't been told who the artist is.
-    private String title="<Empty>", artist="Unknown";                 // need to add, returnString=""; for toString()
+    private String title="<Empty>", artist="Unknown";                 // need to add, returnString = "..."; for toString()
 
     //Set of constructors:
     //We wanted to cover every likely combination of string(s)/int(s).  
 
     public Track(){
-        //Empty construct for possible empty placeholders on the playlist string 
+        //Empty construct for possible empty placeholders on the playlist string
+        
     }
 
     public Track(String t){
@@ -43,7 +44,7 @@ public class Track{
 
     public Track(String t, int y){
         //This assumes the string will be the title, and guesses what the int value refers to.
-        title = t;
+        this.title = t;
 
         //This if statement set checks the int input and decides if it is a year length or a duration length.
         //A year length is assumed to be given in 4 digits eg. "2017" 
@@ -59,8 +60,8 @@ public class Track{
 
     public Track(String t, String a, int d){
         //This assumes that the first two strings are the Title and the Artist(In that order) and also guesses what the int value refers to.
-        title = t;
-        artist = a;
+        this.title = t;
+        this.artist = a;
 
         //Same as previous constructor.
         if(d < 10000 && d > 0){
@@ -73,55 +74,62 @@ public class Track{
         }
     }
 
+    public Track(String t, int y, int d){
+        // When we are given the artist the year and duration but not the artist
+        this.title = t;
+        this.year = y;
+        this.duration = d;
+    }
+
     public Track(String t, String a, int y, int d){
         //when all information is provided (Yay)
         this.title = t;
         this.artist = a;
-        year = y;
-        duration = d;
+        this.year = y;
+        this.duration = d;
     }
 
     //Set and Gets:
     //Set and get title.
     public String getTitle(){
-        return title;
+        return this.title;
     }
 
     public void setTitle(String t){
-        title = t;
+        this.title = t;
     }
 
     //Set and get artist.
     public String getArtist(){
-        return artist;
+        return this.artist;
     }
 
     public void setArtist(String a){
-        artist = a;
+        this.artist = a;
     }
 
     //Set and get year.
     public int getYear(){
-        return year;
+        return this.year;
     }
 
     public void setYear(int y){
         //The year input must be 4 digits long, else no change will be made. 
         //Originally used an if nested in an if but && seems more tidy.
         if(y < 10000 && y > 999){
-            year = y;
+            this.year = y;
         }
     }
 
     //Set and get duration.
     public int getDuration(){
-        return duration;
+        return this.duration;
     }
 
     public void setDuration(int d){
         // duration must be 3 digits long or less, else no change will be made
         if(d < 1000 && d > 0){
-            duration = d;
+            this.duration = d;
         }
     }
 

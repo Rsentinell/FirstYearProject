@@ -13,22 +13,21 @@ public class TempMain
         Track temp1= new Track("look here","jumping",1943,201);
         Track temp2= new Track();
         Track temp3= new Track("John","seeting",1977,181);
-        aTrack = new Track("Slow Hands","Niall Horan",2017,188);
-        
-        for (int j=0;j<2;j++){
-            //playList[j] = (Track temp = new Track("Rasto","jumping",1943,201));
-            //Track temp + (j) = new Track("Patrick","jumping",1981,156);
-        }
-        
-        //getString()  == "Artist: rasto      "
-        
-        System.out.println(temp1);
-        // System.out.println(temp1.getArtist());
-        // System.out.println(temp1.getYear());
-        // System.out.println(temp1.getDuration());
-        System.out.println();
-         System.out.println(temp2.toString());
-        System.out.println(aTrack);
-        // System.out.println(temp2.getDuration());
+
+        Playlist Dermott1 = new Playlist();
+        Dermott1.add("Dermott");
+        Dermott1.add("Lols");
+        Dermott1.add(temp1);
+        Dermott1.add(temp3);
+        Dermott1.add("Dermott");
+        Dermott1.add("Lols");
+        Dermott1.add(temp1);
+        Dermott1.add(temp3);
+
+   
+        System.out.println(Dermott1.showList());
+        Dermott1.remove(7);
+        System.out.println(Dermott1.showList());
+
     }
 }
