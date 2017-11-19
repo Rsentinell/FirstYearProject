@@ -2,7 +2,7 @@
 /**
  * Write a description of class Track here.
  *
- * @author Jonathan Ryley 17244501, Rastislav Salplachta 17244382
+ * @author 
  * @version (a version number or a date)
  * 
  * (Spec)
