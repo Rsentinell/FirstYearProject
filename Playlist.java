@@ -2,7 +2,7 @@
 /**
  * Write a description of class PlayList here.
  *
- * @author (your name)
+ * @author ......................
  * @version (a version number or a date)
  */
 
@@ -38,22 +38,24 @@
  * If there is a track at the position specified then it should be removed and all the tracks in the positions above it should be moved down one position. 
  * In addition, the number of tracks in the list should be reduced by one. 
  * 
- * •    A showList method that displays the playlist on the screen in sequential order (i.e. in the order that the tracks appear in the list). The showList header
- *  is as follows
+ * •    A showList method that displays the playlist on the screen in sequential order (i.e. in the order that the tracks appear in the list). 
+ * The showList header is as follows
  * public showList()
  * Remember, the list can have up to 100 entries but most of the time it is likely to have less than 100 entries. The method should only display the tracks 
- * currently in the list. If there are no tracks in the list the method should display the message “The list is empty”. 
- * •    A playAll method that plays all the tracks in the list either in sequence or randomly. 
+ * currently in the list. If there are no tracks in the list the method should display the message “The list is empty�?. 
+ *
+•    A playAll method that plays all the tracks in the list either in sequence or randomly. 
  * Passing the value false as a parameter plays the tracks sequentially (i.e. in the sequence they appear in the list).  
  * Passing the value true as a parameter plays the tracks randomly. When playing tracks randomly each track should be played only once. In addition, playing the 
  * tracks randomly should NOT alter the sequence of the tracks in the list.
  * The method header is as follows 
  * public play(boolean random)
+ * 
  * •    A playIf method that plays tracks in the list that satisfy specified criteria. The playIf method is overloaded as follows
  * public playIf(String artist)
  * public playIf(int year)
- * The first method will play all tracks in the list that contain the text specified (upper or lower case) in the artist name. For example, playIf(“eagles”) or 
- * playIf(“EAGLES”) or playIf(“THE eagles”) should play all the tracks in the list that have the specified strings somewhere/anywhere in the artist name.
+ * The first method will play all tracks in the list that contain the text specified (upper or lower case) in the artist name. For example, playIf(“eagles�?) or 
+ * playIf(“EAGLES�?) or playIf(“THE eagles�?) should play all the tracks in the list that have the specified strings somewhere/anywhere in the artist name.
  * The second method will play all tracks that were released in the specified year. 
  * The tracks should be played in the sequence they appear in the list.
  * If none of the tracks match the specified value then no output should be produced.
@@ -68,18 +70,21 @@ public class Playlist
     private Track[] playlist;
 
     //Constructors
+    public Playlist(){       
+        this.playlist = new Track[100];
+    }
 
-    public Playlist(){
+    public Playlist(String name){
+        this.playlistName = name;        
         this.playlist = new Track[100];
     }
 
     //Start of "add" methods
-
     public boolean add(String title, String artist, int year, int duration) {
-        if(trackCount < 100){
+        if(trackCount < this.playlist.length){
             //This method constructs the Track Object directly onto our Playlist array(If there is space on the Playlist).
             this.playlist[this.trackCount] = new Track(title, artist, year, duration);
-            trackCount++;
+            this.trackCount++;
             return true;
         }
         else {
@@ -87,11 +92,12 @@ public class Playlist
         }
     }
 
+    //This method was created for tests and some "unusual" constructor calls.
     public boolean add(String title){
-        if(trackCount < 100){
+        if(trackCount < this.playlist.length){
             //This method constructs the Track Object directly onto our Playlist array(If there is space on the Playlist).
             this.playlist[this.trackCount] = new Track(title);
-            trackCount++;
+            this.trackCount++;
             return true;
         }
         else {
@@ -100,10 +106,10 @@ public class Playlist
     }
 
     public boolean add(Track t){
-        if(trackCount < 100){
+        if(trackCount < this.playlist.length){
             //This method adds an already constructed track to the Playlist array(If there is space on the Playlist)
             this.playlist[this.trackCount] = t;
-            trackCount++;
+            this.trackCount++;
             return true;
         } 
         else {
@@ -113,27 +119,33 @@ public class Playlist
 
     //Removal method
     public boolean remove(int trackPos){
-        //This part checks to see if the track position requested exists within our current list of tracks, if it does not then it returns a "false" value.
-        //
+        //This part checks to see if the track position requested exists within our current list of tracks. 
+        //If it doesn't then it returns a "false" value.
         if (this.trackCount > 0 && trackPos < this.trackCount && trackPos > 0){
             if(trackPos != 99){ 
-                //This could become a problem if we decide to change the max playlist length.
+                //This for loop shifts all tracks that come after our input position back one position.
+                //We are removing the track by overwriting it with the next track.
+                //This way all tracks get shifted back a space and we are left with a continuous playlist(no gaps)
                 for (int i = trackPos; i < this.trackCount; i++){
 
                     //this song +1 move to posintion i
                     this.playlist[i - 1] = this.playlist[i];
 
                 }
+
+                //This bit removes the final track in the list, 
+                //We do this so that we don't get an extra version of the last track in the list.
                 this.trackCount--;
-                this.playlist[this.trackCount] = new Track();
+                this.playlist[this.trackCount] = null;
 
                 return true;
             }
             else{
-                //This part only happens if we are at the end of the array aka position 99
+                //This part only happens if we are at the end of the array aka position 99.
+                //We don't want to try and copy something that is beyond our array parameters onto our array.
                 this.trackCount--;
-                this.playlist[this.trackCount] = new Track();
-                
+                this.playlist[this.trackCount] = null;
+
                 return true;
             }
         }
@@ -142,21 +154,126 @@ public class Playlist
         }
     }
 
-    // Testing methods tool
+    //A tool for testing
     public Track getTrackAt(int y){
         return this.playlist [y];
     }
 
+    /**    � A playAll method that plays all the tracks in the list either in sequence or randomly.
+    Passing the value false as a parameter plays the tracks sequentially 
+    (i.e. in the sequence they appear in the list).
+
+    Passing the value true as a parameter plays the tracks randomly. 
+    When playing tracks randomly each track should be played only once. 
+    In addition, playing the tracks randomly should NOT alter the sequence of the tracks in the list.
+
+    The method header is as follows 
+
+     */
+    public String play(boolean random){
+        String re = "";
+
+        //This checks the playlist to see if it is empty or not.
+        if(trackCount != 0){
+            if(random == true){
+                int[] shuffle = new int [trackCount];
+                int temp, rand1, rand2;
+
+                //This creates an array of numbers that represent track positions
+                for(int i=0;i<trackCount;i++){
+                    shuffle[i] = i;
+                }
+
+                //This shuffles up the numbers on our new array
+                for(int i=0;i<200;i++){
+                    rand1 = (int)(Math.random()*trackCount);
+                    rand2 = (int)(Math.random()*trackCount);
+
+                    temp = shuffle[rand1];  
+                    shuffle[rand1] = shuffle[rand2];
+                    shuffle[rand2] = temp;
+
+                }
+
+                //This plays all the tracks in the order that has been shuffled
+                for (int i = 0; i < trackCount; i++){
+                    re += (this.playlist[shuffle[i]] +"\n");
+                }
+            }
+            else{
+                //This plays all the tracks in the order they are listed (not shuffled)
+                for (int i = 0; i < trackCount; i++){
+                    re += (this.playlist[i] +"\n");
+                }
+
+            }
+        }
+
+        //In case the list is empty
+        else{
+            re = "The list is empty"; 
+        }
+        return re;
+        //return showList();   <----would this work?
+    }
+
+    /* •    A playIf method that plays tracks in the list that satisfy specified criteria. The playIf method is overloaded as follows
+     * public playIf(String artist)
+     * public playIf(int year)
+     * The first method will play all tracks in the list that contain the text specified (upper or lower case) in the artist name. For example, playIf(“eagles�?) or 
+     * playIf(“EAGLES�?) or playIf(“THE eagles�?) should play all the tracks in the list that have the specified strings somewhere/anywhere in the artist name.
+     * The second method will play all tracks that were released in the specified year. 
+     * The tracks should be played in the sequence they appear in the list.
+     * If none of the tracks match the specified value then no output should be produced.
+     * We can’t actually play the tracks so for testing purposes displaying the track details on the screen will be considered equivalent to playing the track.
+     * You may find it useful to develop additional methods that help simplify or improve the efficiency of some operations.
+     */
+
+    public void playIf(String artist){
+    for(int i=0;i<trackCount;i++){
+        boolean test = false;    
+       // org.apache.commons.lang3.StringUtils.containsIgnoreCase(this.playlist[i].getArtist(), artist)
+        if(test  == true){
+                    System.out.println(playlist[i]);
+
+                }
+            }
+        //containsIgnoreCase
+        
+    }
+
+    public void playIf(int year){
+        if(year > 999 && year < 10000){
+            for(int i=0;i<trackCount;i++){
+                if(this.playlist[i].getYear() == year){
+                    System.out.println(playlist[i]);
+
+                }
+            }
+        }
+    }
+
+    //This method calls every current track in our playlist and envokes the "toString()" method in our Track objects.
+    //It returns the string as a list.
+    //It is controled by the current "trackCount."
     public String showList(){
         String re = "";
-        for (int i = 0; i < this.trackCount; i++){
-            re += (this.playlist[i] +"\n");
+        if(trackCount > 0){
+            for (int i = 0; i < this.trackCount; i++){
+                re += (this.playlist[i] +"\n");
+            }
+        }
+        //If the playlist is empty:
+        else{
+            re = "The list is empty";
         }
         return re;
     }
 
     public String toString(){
-        // needs to be done
+        // needs to be modified (I'm not sure that only printing out the list of tracks here is correct).
+        // There are still the trackCount values and the playlistName to consider.
+        //(That said, I'm still not sure how to get the playlist name value yet. :/ )
         String re = "";;
         for (int i = 0; i < playlist.length; i++){
             re += (this.playlist[i] +"\n");

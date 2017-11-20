@@ -14,6 +14,19 @@ public class TempMain
         Track temp2= new Track();
         Track temp3= new Track("John","seeting",1977,181);
 
+        Playlist Test = new Playlist();
+        //int test2 = Test.getLength(); <-- I need to practice the syntax for this
+        for(int i=0;i< 100 ;i++){
+            Test.add("Track" + (i+1));
+
+        }
+
+        //Test.remove(99); 
+        System.out.println(Test.play(false));
+
+        System.out.println(Test.play(true));
+        
+        
         Playlist Dermott1 = new Playlist();
         Dermott1.add("Dermott");
         Dermott1.add("Lols");
@@ -24,10 +37,10 @@ public class TempMain
         Dermott1.add(temp1);
         Dermott1.add(temp3);
 
-   
-        System.out.println(Dermott1.showList());
-        Dermott1.remove(7);
-        System.out.println(Dermott1.showList());
+        //System.out.println(Dermott1.showList());
+        //Dermott1.remove(9);
+        //System.out.println(Dermott1.showList());
 
     }
+
 }
