@@ -74,6 +74,8 @@ public class Playlist
         this.playlist = new Track[100];
     }
 
+    //This constructor takes a string input and saves it to our playlistName String, This way we can store the name of the playlist when we construct it, instead of using a "set" later. 
+    //(the "set" option is still there, just not required) 
     public Playlist(String name){
         this.playlistName = name;        
         this.playlist = new Track[100];
@@ -92,7 +94,7 @@ public class Playlist
         }
     }
 
-    //This method was created for tests and some "unusual" constructor calls.
+    //This method adds a track to the playlist when only the title is supplied, (was created for tests and some "unusual" track constructor calls).
     public boolean add(String title){
         if(trackCount < this.playlist.length){
             //This method constructs the Track Object directly onto our Playlist array(If there is space on the Playlist).
@@ -117,7 +119,7 @@ public class Playlist
         }
     }
 
-    //Removal method
+    //Remove method
     public boolean remove(int trackPos){
         //This part checks to see if the track position requested exists within our current list of tracks. 
         //If it doesn't then it returns a "false" value.
@@ -154,11 +156,7 @@ public class Playlist
         }
     }
 
-    //A tool for testing
-    public Track getTrackAt(int y){
-        return this.playlist [y];
-    }
-
+    //Playback methods
     /**    · A playAll method that plays all the tracks in the list either in sequence or randomly.
     Passing the value false as a parameter plays the tracks sequentially 
     (i.e. in the sequence they appear in the list).
@@ -230,16 +228,17 @@ public class Playlist
      */
 
     public void playIf(String artist){
-    for(int i=0;i<trackCount;i++){
-        boolean test = false;    
-       // org.apache.commons.lang3.StringUtils.containsIgnoreCase(this.playlist[i].getArtist(), artist)
-        if(test  == true){
-                    System.out.println(playlist[i]);
+        artist.toLowerCase();
+        String test;
 
-                }
+        for(int i=0;i<trackCount;i++){
+            test = this.playlist[i].getArtist().toLowerCase();
+
+            if(test.contains(artist) == true || artist.contains(test) == true){
+                System.out.println(playlist[i]);
+
             }
-        //containsIgnoreCase
-        
+        }
     }
 
     public void playIf(int year){
@@ -253,7 +252,7 @@ public class Playlist
         }
     }
 
-    //This method calls every current track in our playlist and envokes the "toString()" method in our Track objects.
+    //This method calls every current track in our playlist and envokes the "toString()" method in our Track objects. <--- no longer accurate!!.
     //It returns the string as a list.
     //It is controled by the current "trackCount."
     public String showList(){
@@ -281,4 +280,12 @@ public class Playlist
         return re;
     }
 
+    //"Set" and "Get" for playlist name.
+    public void setPlaylistName(String n){
+        playlistName = n;
+    }
+
+    public String getPlaylistName(){
+        return playlistName;
+    }
 }
