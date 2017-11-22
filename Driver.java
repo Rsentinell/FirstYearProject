@@ -7,10 +7,6 @@
  */
 public class Driver
 {
-    private String playlistName;
-    private int trackNumber;
-    private Track [] playlist;
-
     public static void main (String[] args){
         /** Demonstration of our Track class. 
          */
